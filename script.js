@@ -1,8 +1,11 @@
 const habitform = document.getElementById("habit-form");
 const habitInput = document.getElementById("habit-input");
 const habits = document.getElementById("habits");
-const habitdata = [];
+const savedHabits = localStorage.getItem("habitdata");
+const habitdata = savedHabits ? JSON.parse(savedHabits) : [];
 const errorMessage = document.getElementById("error-message");
+
+
 
 
 
@@ -18,7 +21,9 @@ habitform.addEventListener("submit", function(event) {
         return;
         
     }
-    habitdata.push(habitName);
+    habitdata.push(habitName , false);
+    localStorage.setItem("habitdata", JSON.stringify(habitdata));
+
     console.log("Habit Data:", habitdata);
     console.log("Habits:", habitName);
 
