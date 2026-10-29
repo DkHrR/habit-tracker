@@ -25,7 +25,41 @@ habitform.addEventListener("submit", function(event) {
 
     const habitlist = document.createElement("li");
     habitlist.textContent = habitName;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    habitlist.appendChild(checkbox);
+    checkbox.addEventListener("change", function(){
+        if (checkbox.checked) {
+            habitlist.style.textDecoration = "line-through";
+            console.log("habit completed:", habitName);
+        }
+            
+        else {
+            habitlist.style.textDecoration = "none";
+            console.log("habit not completed:", habitName);
+
+        }
+            
+});
     habits.appendChild(habitlist);
+
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = 'Delete';
+    deleteButton.type = "button";
+    deleteButton.className = "delete-button";
+    habitlist.appendChild(deleteButton);
+    deleteButton.addEventListener("click", function(){
+        habitlist.remove();
+        const  index = habitdata.indexOf(habitName);
+        habitdata.splice(index, 1);
+        console.log("Habit data after deletion:", habitdata);
+
+        
+
+    });
+    
+
 
     habitform.reset();
 
@@ -33,4 +67,9 @@ habitform.addEventListener("submit", function(event) {
 
 
 
-})
+});
+
+habitInput.addEventListener("input", function (){
+    errorMessage.textContent = "";
+
+});
