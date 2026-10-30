@@ -9,6 +9,37 @@ const errorMessage = document.getElementById("error-message");
 
 
 
+function displayHabits(habit) {
+      const habitlist = document.createElement("li");
+    habitlist.textContent = habit.name;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = habit.completed;
+    habitlist.appendChild(checkbox);
+    checkbox.addEventListener("change", function(){
+        const index = habitdata.findIndex(habit => habit.name === habit.name);
+
+        if (checkbox.checked) {
+            habitdata[index].completed = true;
+            habitlist.style.textDecoration = "line-through";
+
+        } else {
+            habitdata[index].completed = false;
+            habitlist.style.textDecoration = "none";
+
+        }
+        localStorage.setItem("habitdata", JSON.stringify(habitdata));
+
+            
+});
+    habits.appendChild(habitlist);
+
+}
+
+
+
+
+
 
 
 
@@ -21,32 +52,17 @@ habitform.addEventListener("submit", function(event) {
         return;
         
     }
-    habitdata.push(habitName , false);
-    localStorage.setItem("habitdata", JSON.stringify(habitdata));
+   habitdata.push({
+    name : habitName,
+    completed : false 
+   });
+
 
     console.log("Habit Data:", habitdata);
     console.log("Habits:", habitName);
 
 
-    const habitlist = document.createElement("li");
-    habitlist.textContent = habitName;
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    habitlist.appendChild(checkbox);
-    checkbox.addEventListener("change", function(){
-        if (checkbox.checked) {
-            habitlist.style.textDecoration = "line-through";
-            console.log("habit completed:", habitName);
-        }
-            
-        else {
-            habitlist.style.textDecoration = "none";
-            console.log("habit not completed:", habitName);
-
-        }
-            
-});
-    habits.appendChild(habitlist);
+  
 
 
     const deleteButton = document.createElement("button");
@@ -56,7 +72,7 @@ habitform.addEventListener("submit", function(event) {
     habitlist.appendChild(deleteButton);
     deleteButton.addEventListener("click", function(){
         habitlist.remove();
-        const  index = habitdata.indexOf(habitName);
+        const  index = habitdata.findIndex(habit => habit.name === habitName  );
         habitdata.splice(index, 1);
         console.log("Habit data after deletion:", habitdata);
 
