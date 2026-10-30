@@ -16,8 +16,23 @@ function displayHabits(habit) {
     checkbox.type = "checkbox";
     checkbox.checked = habit.completed;
     habitlist.appendChild(checkbox);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "delete";
+    deleteButton.type = "button";
+    deleteButton.className = "delete-button";
+    habitlist.appendChild(deleteButton);
+
+    deleteButton.addEventListener("click", function(){
+        const index = habitdata.findIndex(item => item.name === habit.name);
+        habitdata.splice(index, 1);
+        habitlist.remove();
+        localStorage.setItem("habitdata", JSON.stringify(habitdata));
+
+    })
+
     checkbox.addEventListener("change", function(){
-        const index = habitdata.findIndex(habit => habit.name === habit.name);
+        const index = habitdata.findIndex(item => item.name === habit.name);
 
         if (checkbox.checked) {
             habitdata[index].completed = true;
